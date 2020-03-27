@@ -4,9 +4,9 @@
 
 #include <string.h>
 
-#include "edgelist.h"
-#include "adjarray.h"
-#include "adjmatrix.h"
+#include "../../struct/edgelist.h"
+#include "../../struct/adjarray.h"
+#include "../../struct/adjmatrix.h"
 #include "algos.h"
 
 

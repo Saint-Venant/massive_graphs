@@ -3,12 +3,6 @@
 bin					// will contain the executable
 src
 	main.c
-	adjarray.h
-	adjarray.c
-	adjmatrix.h
-	adjmatrix.c
-	edgelist.h
-	edgelist.c
 	
 	algos.h
 	algos.c
@@ -18,7 +12,15 @@ src
 
 --- To compile ---
 
-In folder /src/, execute command "gcc main.c adjarray.c adjmatrix.c edgelist.c algos.c tools.c -O9 -o ../bin/main" where "main" will be the name of the executable.
+In folder /src/, execute command:
+	"gcc main.c
+		../../struct/adjarray.c
+		../../struct/adjmatrix.c
+		../../struct/edgelist.c
+		algos.c
+		tools.c
+	-O9 -o ../bin/main"
+where "main" will be the name of the executable.
 
 --- To execute ---
 In folder bin, execute command "./main grapheInstance.txt exerciseNumber" where :

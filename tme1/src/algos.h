@@ -7,7 +7,7 @@
 #include <stdbool.h>
 #include <string.h>
 
-#include "adjarray.h"
+#include "../../struct/adjarray.h"
 #include "tools.h"
 
 
