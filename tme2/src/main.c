@@ -4,9 +4,10 @@
 
 #include <string.h>
 
-#include "edgelist.h"
-#include "adjarray.h"
-#include "adjmatrix.h"
+#include "../../struct/edgelist.h"
+#include "../../struct/adjarray.h"
+#include "../../struct/adjmatrix.h"
+#include "../../struct/directedAdjArray.h"
 
 
 char* concat(char* a, char* b) {
@@ -16,12 +17,12 @@ char* concat(char* a, char* b) {
 	return s;
 }
 
-void Exercise2(char* graphPath) {
+void Exercise1(char* graphPath) {
 	time_t t1,t2;
 	t1=time(NULL);
 
-	printf("Reading edgelist from file %s\n", graphPath);
-	adjlist* g=read_toadjlist(graphPath);
+	printf("Reading DirectedAdjlist from file %s\n", graphPath);
+	DirectedAdjlist* g=read_toDirectedAdjlist(graphPath);
 
 	printf("\nNumber of nodes: %lu\n",g->n);
 	printf("Number of edges: %lu\n\n",g->e);
@@ -43,21 +44,7 @@ int main(int argc, char** argv) {
 	printf("Graph path : %s\n", graphPath);
 	printf("Exercise %u\n\n", exercise);
 
-	if (exercise == 2) {
-		Exercise2(graphPath);
-	} else if (exercise == 3) {
-		Exercise3(instancesDir, graph);
-	} else if (exercise == 4) {
-		printf("> Please choose between exercises : 4.1 ('41'); 4.2 ('42'); 4.3 ('4.3')\n");
-	} else if (exercise == 41) {
-		Exercise4_1(instancesDir, graph);
-	} else if (exercise == 42) {
-		Exercise4_2(instancesDir, graph);
-	} else if (exercise == 43) {
-		Exercise4_3(instancesDir, graph);
-	} else if (exercise == 5) {
-		Exercise5(instancesDir, graph);
-	} else if (exercise == 6) {
-		Exercise6(instancesDir, graph);
+	if (exercise == 1) {
+		Exercise1(graphPath);
 	}
 }

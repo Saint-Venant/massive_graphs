@@ -9,15 +9,15 @@
 
 #include "edgelist.h"
 
-
 //edge list structure:
 typedef struct {
 	unsigned long n;//number of nodes
 	unsigned long e;//number of edges
 	edge *edges;//list of edges
-	bool *mat;//adjacency matrix
-} adjmatrix;
+	unsigned long *cd;//cumulative degree cd[0]=0 length=n+1 # degree out !!#
+	unsigned long *adj;//concatenated lists of neighbors of all nodes
+} DirectedAdjlist;
 
-adjmatrix* read_toadjmatrix(char* input);
-bool mkmatrix(adjmatrix* g);
-void free_adjmatrix(adjmatrix *g);
+DirectedAdjlist* read_toDirectedAdjlist(char* input);
+void mkDirectedAdjlist(DirectedAdjlist* g);
+void free_DirectedAdjlist(DirectedAdjlist *g);
