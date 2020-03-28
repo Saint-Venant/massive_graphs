@@ -9,6 +9,8 @@
 #include "../../struct/adjmatrix.h"
 #include "../../struct/directedAdjArray.h"
 
+#include "algos.h"
+
 
 char* concat(char* a, char* b) {
 	char* s = malloc((strlen(a) + strlen(b) + 1)*sizeof(char));
@@ -27,8 +29,13 @@ void Exercise1(char* graphPath) {
 	printf("\nNumber of nodes: %lu\n",g->n);
 	printf("Number of edges: %lu\n\n",g->e);
 
-	free(g->edges);
-	free(g);
+	mkDirectedAdjlist(g);
+
+	float alpha = 0.15;
+	double* p = powerIterationPR(g, alpha);
+
+	free(p);
+	free_DirectedAdjlist(g);
 
 	t2=time(NULL);
 	printf("- Overall time = %ldh%ldm%lds\n",(t2-t1)/3600,((t2-t1)%3600)/60,((t2-t1)%60));
