@@ -6,6 +6,8 @@ src
 	
 	algos.h
 	algos.c
+	pages.h
+	pages.c
 
 
 --- To compile ---
@@ -17,6 +19,7 @@ In folder /src/, execute command
 		../../struct/edgelist.c
 		../../struct/directedAdjArray.c
 		algos.c
+		pages.c
 	-O9 -o ../bin/main"
 where "main" will be the name of the executable.
 

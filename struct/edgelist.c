@@ -45,7 +45,7 @@ FILE* readBeginningFile(char* input) {
 	char* output;
 	while (true) {
 		output = fgets(line, 255, file);
-		if (dash[0] == line[0]) {
+		if ((dash[0] == line[0]) || (eol[0] == line[0])) {
 			nbDash += 1;
 		} else {
 			break;

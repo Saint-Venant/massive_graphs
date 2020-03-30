@@ -5,7 +5,7 @@ double* powerIterationPR(DirectedAdjlist* g, float alpha) {
   double* p2 = malloc(g->n*sizeof(double));
   unsigned int i, u, v, d_u;
   double epsilon = pow(10, -12);
-  double q, pnorm, x, diff;
+  double q, pnorm, x, diff, maxDiff;
 
   // initialize p1 and p2
   for (u=0; u<g->n; u++) {
@@ -13,8 +13,10 @@ double* powerIterationPR(DirectedAdjlist* g, float alpha) {
     p2[u] = 0.;
   }
 
+  maxDiff = 0;
+  diff = 1;
   unsigned int iterations = 0;
-  while (iterations < 50) {
+  while (diff > maxDiff*pow(10, -9)) {
     for (i=0; i<g->e; i++) {
       u = g->edges[i].s;
       v = g->edges[i].t;
@@ -48,8 +50,11 @@ double* powerIterationPR(DirectedAdjlist* g, float alpha) {
     }
 
     iterations += 1;
-    printf("diff = %f * 10e-12\n", diff*pow(10, 12));
+    maxDiff = (diff > maxDiff) ? diff : maxDiff;
+    //printf("diff = %f * 10e-12\n", diff*pow(10, 12));
   }
+
+  printf("Computed Page Rank in %u iterations\n", iterations);
 
   free(p2);
   return p1;
