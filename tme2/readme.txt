@@ -11,6 +11,7 @@ src/
 	tools.h
 	tools.c
 outputEx2/				// will contain the output files of exercise 2
+outputEx4/				// will contain the output files of exercise 4
 tme2.pdf
 
 

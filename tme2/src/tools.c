@@ -54,3 +54,52 @@ void Exercise2_saveX(DirectedAdjlist* g, double* pagerankAlpha, float alpha, cha
   }
   fclose(file);
 }
+
+void computeCoreDecomposition(adjlist* g, unsigned long* coreValue, unsigned long* coreValues, unsigned long* coreOrdering) {
+	unsigned long i, j, k;
+	Vertex* v;
+
+	printf("Creating vertices\n");
+	Vertex** vertices = malloc(g->n*sizeof(Vertex*));
+	for (i=0; i<g->n; i++) {
+		vertices[i] = malloc(sizeof(Vertex));
+		vertices[i]->index = i;
+		vertices[i]->degree = g->cd[i+1] - g->cd[i];
+		vertices[i]->inserted = 0;
+	}
+
+	printf("\nBuilding MinHeap\n");
+	MinHeap* h = createMinHeap(g->n);
+	for (i=0; i<g->n; i++) {
+		insert(h, vertices[i]);
+	}
+
+	printf("\nComputing core value\n");
+	k = g->n;
+	*coreValue = 0;
+	while (h->count > 0) {
+		v = popMin(h);
+		*coreValue = (v->degree > *coreValue) ? v->degree : *coreValue;
+		coreValues[v->index] = *coreValue;
+		for (i=g->cd[v->index]; i<g->cd[v->index + 1]; i++) {
+			j = g->adj[i];
+			if (vertices[j]->inserted) {
+				decrementAndUpdate(h, vertices[j]);
+			}
+		}
+		coreOrdering[v->index] = k;
+		k--;
+	}
+
+	free_MinHeap(h);
+	free_vertices(vertices, g->n);
+}
+
+void saveResultEx4(adjlist* g, unsigned long* coreValues, char* outputPath) {
+	FILE* file = fopen(outputPath, "w");
+	fprintf(file, "# 'Author ID' 'Core value' 'Degree'\n");
+	for (unsigned long i=0; i<g->n; i++) {
+		fprintf(file, "%lu %lu %lu\n", i, coreValues[i], g->cd[i+1] - g->cd[i]);
+	}
+	fclose(file);
+}

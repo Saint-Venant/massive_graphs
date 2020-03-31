@@ -10,4 +10,6 @@ tme1/
 	bin/			-> hidden in the .gitignore
 tme2/
 	bin/			-> hidden in the .gitignore
+	outputEx2/		-> hidden in the .gitignore
+	outputEx4/		-> hidden in the .gitignore
 struct/
