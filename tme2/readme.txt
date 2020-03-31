@@ -8,6 +8,8 @@ src
 	algos.c
 	pages.h
 	pages.c
+	tools.h
+	tools.c
 
 
 --- To compile ---
@@ -20,6 +22,7 @@ In folder /src/, execute command
 		../../struct/directedAdjArray.c
 		algos.c
 		pages.c
+		tools.c
 	-O9 -o ../bin/main"
 where "main" will be the name of the executable.
 

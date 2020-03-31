@@ -11,14 +11,9 @@
 
 #include "algos.h"
 #include "pages.h"
+#include "tools.h"
 
 
-char* concat(char* a, char* b) {
-	char* s = malloc((strlen(a) + strlen(b) + 1)*sizeof(char));
-	strcpy(s, a);
-	strcat(s, b);
-	return s;
-}
 
 void Exercise1() {
 	char* wikiLinksPath = "../../instances_tme2/Wikipedia-directed-links.txt";
@@ -68,17 +63,67 @@ void Exercise1() {
 	printf("- Overall time = %ldh%ldm%lds\n",(t2-t1)/3600,((t2-t1)%3600)/60,((t2-t1)%60));
 }
 
+void Exercise2() {
+	char* wikiLinksPath = "../../instances_tme2/Wikipedia-directed-links.txt";
+	char* wikiPagesPath = "../../instances_tme2/Wikipedia-pages-names.txt";
+	char* outputDir = "../outputEx2/";
+	time_t t1,t2;
+	t1=time(NULL);
+
+	printf("Reading DirectedAdjlist from file %s\n", wikiLinksPath);
+	DirectedAdjlist* g=read_toDirectedAdjlist(wikiLinksPath);
+
+	printf("\nNumber of nodes: %lu\n",g->n);
+	printf("Number of edges: %lu\n\n",g->e);
+
+	mkDirectedAdjlist(g);
+
+	float alpha15 = 0.15;
+	printf("Running Page Rank with alpha = %f\n", alpha15);
+	double* pagerank15 = powerIterationPR(g, alpha15);
+
+	Exercise2_1_2(g, pagerank15, outputDir);
+
+	Exercise2_saveX(g, pagerank15, alpha15, outputDir, "exercise2_save15.txt");
+	free(pagerank15);
+
+	float alpha10 = 0.1;
+	printf("\nRunning Page Rank with alpha = %f\n", alpha10);
+	double* pagerank10 = powerIterationPR(g, alpha10);
+	Exercise2_saveX(g, pagerank10, alpha10, outputDir, "exercise2_save10.txt");
+	free(pagerank10);
+
+	float alpha20 = 0.2;
+	printf("\nRunning Page Rank with alpha = %f\n", alpha20);
+	double* pagerank20 = powerIterationPR(g, alpha20);
+	Exercise2_saveX(g, pagerank20, alpha20, outputDir, "exercise2_save20.txt");
+	free(pagerank20);
+
+	float alpha50 = 0.5;
+	printf("\nRunning Page Rank with alpha = %f\n", alpha50);
+	double* pagerank50 = powerIterationPR(g, alpha50);
+	Exercise2_saveX(g, pagerank50, alpha50, outputDir, "exercise2_save50.txt");
+	free(pagerank50);
+
+	float alpha90 = 0.9;
+	printf("\nRunning Page Rank with alpha = %f\n", alpha90);
+	double* pagerank90 = powerIterationPR(g, alpha90);
+	Exercise2_saveX(g, pagerank90, alpha90, outputDir, "exercise2_save90.txt");
+	free(pagerank90);
+
+	free_DirectedAdjlist(g);
+
+	t2=time(NULL);
+	printf("- Overall time = %ldh%ldm%lds\n",(t2-t1)/3600,((t2-t1)%3600)/60,((t2-t1)%60));
+}
+
 int main(int argc, char** argv) {
-	//char* instancesDir = "../../instances_tme2/";
-	//char* graph = argv[1];
-	//char* graphPath = concat(instancesDir, graph);
 	int exercise = atoi(argv[1]);
-	//printf("Instances dir : %s\n", instancesDir);
-	//printf("Graph : %s\n", graph);
-	//printf("Graph path : %s\n", graphPath);
 	printf("Exercise %u\n\n", exercise);
 
 	if (exercise == 1) {
 		Exercise1();
+	} else if (exercise == 2) {
+		Exercise2();
 	}
 }
