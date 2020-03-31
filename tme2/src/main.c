@@ -118,8 +118,90 @@ void Exercise2() {
 	printf("- Overall time = %ldh%ldm%lds\n",(t2-t1)/3600,((t2-t1)%3600)/60,((t2-t1)%60));
 }
 
-void Exercise3() {
-	testHeap();
+void Exercise3(char* graphPath) {
+	time_t t1,t2;
+	t1=time(NULL);
+
+	printf("Reading adjarray from file %s\n", graphPath);
+	adjlist* g = read_toadjlist(graphPath);
+
+	printf("\nNumber of nodes: %lu\n",g->n);
+	printf("Number of edges: %lu\n\n",g->e);
+
+	printf("Building the adjacency list\n");
+	mkadjlist(g);
+
+	unsigned long i, j;
+
+	printf("Creating vertices\n");
+	Vertex** vertices = malloc(g->n*sizeof(Vertex*));
+	for (i=0; i<g->n; i++) {
+		vertices[i] = malloc(sizeof(Vertex));
+		vertices[i]->index = i;
+		vertices[i]->degree = g->cd[i+1] - g->cd[i];
+		vertices[i]->inserted = 0;
+	}
+
+	printf("\nBuilding MinHeap\n");
+	MinHeap* h = createMinHeap(g->n);
+	for (i=0; i<g->n; i++) {
+		insert(h, vertices[i]);
+	}
+
+	printf("\nComputing core value\n");
+	unsigned long* coreOrdering = malloc(g->n*sizeof(unsigned long));
+	unsigned long k = g->n;
+	unsigned long coreValue = 0;
+	Vertex* v;
+	while (h->count > 0) {
+		v = popMin(h);
+		coreValue = (v->degree > coreValue) ? v->degree : coreValue;
+		for (i=g->cd[v->index]; i<g->cd[v->index + 1]; i++) {
+			j = g->adj[i];
+			if (vertices[j]->inserted) {
+				decrementAndUpdate(h, vertices[j]);
+			}
+		}
+		coreOrdering[v->index] = k;
+		k--;
+	}
+	printf(" > core value = %lu\n", coreValue);
+
+	free_MinHeap(h);
+	free_vertices(vertices, g->n);
+	free(coreOrdering);
+
+	free_adjlist(g);
+
+	t2=time(NULL);
+	printf("- Overall time = %ldh%ldm%lds\n",(t2-t1)/3600,((t2-t1)%3600)/60,((t2-t1)%60));
+}
+
+void Exercise3_1() {
+	char* instancesDir = "../../instances_tme1/";
+	char* graph = "clean_email-Eu-core.txt";
+	char* graphPath = concat(instancesDir, graph);
+	printf("Graph path : %s\n", graphPath);
+
+	Exercise3(graphPath);
+}
+
+void Exercise3_2() {
+	char* instancesDir = "../../instances_tme1/";
+	char* graph = "clean_com-amazon.ungraph.txt";
+	char* graphPath = concat(instancesDir, graph);
+	printf("Graph path : %s\n", graphPath);
+
+	Exercise3(graphPath);
+}
+
+void Exercise3_3() {
+	char* instancesDir = "../../instances_tme1/";
+	char* graph = "clean_com-lj.ungraph.txt";
+	char* graphPath = concat(instancesDir, graph);
+	printf("Graph path : %s\n", graphPath);
+
+	Exercise3(graphPath);
 }
 
 int main(int argc, char** argv) {
@@ -130,7 +212,11 @@ int main(int argc, char** argv) {
 		Exercise1();
 	} else if (exercise == 2) {
 		Exercise2();
-	} else if (exercise == 3) {
-		Exercise3();
+	} else if (exercise == 31) {
+		Exercise3_1();
+	} else if (exercise == 32) {
+		Exercise3_2();
+	} else if (exercise == 33) {
+		Exercise3_3();
 	}
 }

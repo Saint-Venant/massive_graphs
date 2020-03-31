@@ -26,6 +26,13 @@ void free_MinHeap(MinHeap* h) {
   free(h);
 }
 
+void free_vertices(Vertex** vertices, unsigned long nbVertices) {
+  for (unsigned long i=0; i<nbVertices; i++) {
+    free(vertices[i]);
+  }
+  free(vertices);
+}
+
 void heapify_up(MinHeap* h, unsigned long index) {
   if (index == 0) {
     return;
@@ -37,6 +44,8 @@ void heapify_up(MinHeap* h, unsigned long index) {
     Vertex* temp = h->array[parent_node];
     h->array[parent_node] = h->array[index];
     h->array[index] = temp;
+    h->array[index]->pos = index;
+    h->array[parent_node]->pos = parent_node;
     heapify_up(h, parent_node);
   }
 }
@@ -62,6 +71,8 @@ void heapify_down(MinHeap* h, unsigned long parent_node) {
     Vertex* temp = h->array[parent_node];
     h->array[parent_node] = h->array[minNode];
     h->array[minNode] = temp;
+    h->array[parent_node]->pos = parent_node;
+    h->array[minNode]->pos = minNode;
     heapify_down(h, minNode);
   }
 }
@@ -72,14 +83,18 @@ void insert(MinHeap* h, Vertex* v) {
     return;
   }
   h->array[h->count] = v;
+  v->pos = h->count;
+  v->inserted = 1;
   heapify_up(h, h->count);
   h->count++;
 }
 
 void displayMinHeap(MinHeap* h) {
   printf("Display heap\n");
+  Vertex* v;
   for (unsigned long i=0; i<h->count; i++) {
-    printf("-> (i:%lu; d:%lu) ", h->array[i]->index, h->array[i]->degree);
+    v = h->array[i];
+    printf("-> (i:%lu; d:%lu, pos:%lu) ", v->index, v->degree, v->pos);
   }
   printf("\n");
 }
@@ -91,9 +106,20 @@ Vertex* popMin(MinHeap* h) {
   // replace first node by last and delete last
   Vertex* pop = h->array[0];
   h->array[0] = h->array[h->count-1];
+  h->array[0]->pos = 0;
   h->count--;
   heapify_down(h, 0);
+  pop->inserted = 0;
   return pop;
+}
+
+void decrementAndUpdate(MinHeap* h, Vertex* v) {
+  if (v->degree <= 0) {
+    printf("Error : attempt to decrement a degree already equal to 0 !\n");
+    return;
+  }
+  v->degree--;
+  heapify_up(h, v->pos);
 }
 
 void testHeap() {
@@ -113,6 +139,7 @@ void testHeap() {
     vertices[i] = malloc(sizeof(Vertex));
     vertices[i]->index = i;
     vertices[i]->degree = (11*i + 8)%7;
+    vertices[i]->inserted = 0;
     printf("i : %lu -> d = %lu\n", vertices[i]->index, vertices[i]->degree);
   }
 
@@ -133,8 +160,5 @@ void testHeap() {
   free_MinHeap(h);
 
   printf("\nFreeing vertices\n");
-  for (unsigned long i=0; i<nbVertices; i++) {
-    free(vertices[i]);
-  }
-  free(vertices);
+  free_vertices(vertices, nbVertices);
 }
