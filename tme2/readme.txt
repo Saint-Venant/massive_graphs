@@ -1,7 +1,7 @@
 --- Structure of the folder ---
 
-bin					// will contain the executable
-src
+bin/					// will contain the executable
+src/
 	main.c
 	
 	algos.h
@@ -10,6 +10,8 @@ src
 	pages.c
 	tools.h
 	tools.c
+outputEx2/				// will contain the output files of exercise 2
+tme2.pdf
 
 
 --- To compile ---
@@ -20,6 +22,7 @@ In folder /src/, execute command
 		../../struct/adjmatrix.c
 		../../struct/edgelist.c
 		../../struct/directedAdjArray.c
+		../../struct/minHeap.c
 		algos.c
 		pages.c
 		tools.c

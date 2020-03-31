@@ -8,6 +8,7 @@
 #include "../../struct/adjarray.h"
 #include "../../struct/adjmatrix.h"
 #include "../../struct/directedAdjArray.h"
+#include "../../struct/minHeap.h"
 
 #include "algos.h"
 #include "pages.h"
@@ -117,6 +118,10 @@ void Exercise2() {
 	printf("- Overall time = %ldh%ldm%lds\n",(t2-t1)/3600,((t2-t1)%3600)/60,((t2-t1)%60));
 }
 
+void Exercise3() {
+	testHeap();
+}
+
 int main(int argc, char** argv) {
 	int exercise = atoi(argv[1]);
 	printf("Exercise %u\n\n", exercise);
@@ -125,5 +130,7 @@ int main(int argc, char** argv) {
 		Exercise1();
 	} else if (exercise == 2) {
 		Exercise2();
+	} else if (exercise == 3) {
+		Exercise3();
 	}
 }
