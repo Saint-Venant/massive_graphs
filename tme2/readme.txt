@@ -12,6 +12,8 @@ src/
 	tools.c
 outputEx2/				// will contain the output files of exercise 2
 outputEx4/				// will contain the output files of exercise 4
+scripts/				// will contain python scripts to analyze data and make plots
+pictures/				// will contain the graphs produced for exercises 2 and 4
 tme2.pdf
 
 
