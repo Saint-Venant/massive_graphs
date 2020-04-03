@@ -110,7 +110,8 @@ void Exercise3(char* instancesDir, char* graph) {
 
 	char* graphPath = concat(instancesDir, graph);
 	printf("Reading edgelist from file %s\n", graphPath);
-	adjlist* g = read_toadjlist_clean(graphPath);
+	unsigned long selfLoops, duplicateEdges;
+	adjlist* g = read_toadjlist_clean(graphPath, &selfLoops);
 	// At this stage, g:
 	// - does not contain any edge of the form (u, u)
 	// - only contains edges of the form (u, v) where u<v
@@ -124,7 +125,9 @@ void Exercise3(char* instancesDir, char* graph) {
 	sortadjlist(g);
 
 	printf("Cleaning the adjacency list\n");
-	cleanadjlist(g);
+	cleanadjlist(g, &duplicateEdges);
+	printf(" > %lu duplicate edges\n", duplicateEdges);
+	printf(" > %lu self-loops\n", selfLoops);
 
 	printf("\nNumber of nodes: %lu\n",g->n);
 	printf("Number of edges: %lu\n\n",g->e);

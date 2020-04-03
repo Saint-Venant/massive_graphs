@@ -61,9 +61,10 @@ adjlist* read_toadjlist(char* input){
 	return g;
 }
 
-adjlist* read_toadjlist_clean(char* input) {
+adjlist* read_toadjlist_clean(char* input, unsigned long* selfLoops) {
 	unsigned long u,v;
 	unsigned long e1=NLINKS;
+	*selfLoops = 0;
 
 	FILE* file = readBeginningFile(input);
 
@@ -80,6 +81,7 @@ adjlist* read_toadjlist_clean(char* input) {
 			g->edges[g->e].s = v;
 			g->edges[g->e].t = u;
 		} else {
+			*selfLoops += 1;
 			continue;
 		}
 		g->n=max3(g->n, u, v);
@@ -146,11 +148,12 @@ void sortadjlist(adjlist* g) {
 	}
 }
 
-void cleanadjlist(adjlist* g) {
+void cleanadjlist(adjlist* g, unsigned long* duplicateEdges) {
 	unsigned long* cd = calloc((g->n+1), sizeof(unsigned long));
 	unsigned long* adj = malloc(2*g->e*sizeof(unsigned long));
 	unsigned long u,v;
 	unsigned long neigh;
+	*duplicateEdges = 0;
 	for (u=0; u<g->n; u++) {
 		neigh = g->cd[u+1] - g->cd[u];
 		if (neigh == 0) {
@@ -165,10 +168,13 @@ void cleanadjlist(adjlist* g) {
 				v = g->adj[g->cd[u] + j];
 				adj[cd[u+1]] = v;
 				cd[u+1] += 1;
+			} else {
+				*duplicateEdges += 1;
 			}
 		}
 	}
 	adj = realloc(adj,cd[g->n]*sizeof(unsigned long));
+	*duplicateEdges /= 2;
 
 	unsigned long e1=NLINKS;
 	edge* edges = malloc(e1*sizeof(edge));//allocate some RAM to store edges

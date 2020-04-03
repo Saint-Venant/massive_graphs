@@ -23,7 +23,7 @@ void mkadjlist(adjlist* g);
 void free_adjlist(adjlist *g);
 //inline unsigned long max3(unsigned long a,unsigned long b,unsigned long c);
 
-adjlist* read_toadjlist_clean(char* input);
+adjlist* read_toadjlist_clean(char* input, unsigned long* selfLoops);
 void sortadjlist(adjlist* g);
-void cleanadjlist(adjlist* g);
+void cleanadjlist(adjlist* g, unsigned long* duplicateEdges);
 void saveAdjlist(adjlist* g, char* savePath);
