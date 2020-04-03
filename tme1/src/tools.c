@@ -26,8 +26,18 @@ Vertex* createSortedVertices(adjlist* g) {
 
   return vertices;
 }
+
+unsigned long* createMapIndexVertex(adjlist* g, Vertex* vertices) {
+  unsigned long* mapIndexVertex = malloc(g->n*sizeof(unsigned long));
+  for (unsigned long i=0; i<g->n; i++) {
+    mapIndexVertex[vertices[i].index] = i;
+  }
+  return mapIndexVertex;
+}
+
 adjlist* createTriangleAdjlist(adjlist* g) {
   Vertex* vertices = createSortedVertices(g);
+  unsigned long* mapIndexVertex = createMapIndexVertex(g, vertices);
   adjlist* gTr = malloc(sizeof(adjlist));
   gTr->n = g->n;
   gTr->e = 0;
@@ -35,14 +45,15 @@ adjlist* createTriangleAdjlist(adjlist* g) {
   gTr->cd[0] = 0;
   gTr->adj = malloc(2*g->e*sizeof(unsigned long));
 
-  unsigned long index;
+  unsigned long index_u, index_v;
   unsigned long d;
   unsigned long u, v;
   for (u=0; u<g->n; u++) {
-    index = vertices[u].index;
+    index_u = vertices[u].index;
     d = 0;
-    for (unsigned long j=g->cd[index]; j<g->cd[index+1]; j++) {
-      v = g->adj[j];
+    for (unsigned long j=g->cd[index_u]; j<g->cd[index_u+1]; j++) {
+      index_v = g->adj[j];
+      v = mapIndexVertex[index_v];
       if (u < v) {
         gTr->adj[gTr->cd[u] + d] = v;
         d += 1;
@@ -53,6 +64,7 @@ adjlist* createTriangleAdjlist(adjlist* g) {
   gTr->adj = realloc(gTr->adj, gTr->cd[gTr->n]*sizeof(unsigned long));
 
   free(vertices);
+  free(mapIndexVertex);
 
   return gTr;
 }
