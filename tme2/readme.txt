@@ -34,5 +34,4 @@ where "main" will be the name of the executable.
 
 --- To execute ---
 In folder bin, execute command "./main grapheInstance.txt exerciseNumber" where :
-* "grapheInstance.txt" is a given instance
 * "exerciseNumber" is the number of the desired exercise to execute
