@@ -171,6 +171,7 @@ void Exercise3_3() {
 
 	Exercise3(graphPath);
 }
+
 void Exercise3_4() {
 	char* instancesDir = "../../instances_tme1/";
 	char* graph = "clean_orkut.txt";
