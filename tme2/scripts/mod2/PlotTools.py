@@ -2,7 +2,7 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
 
-import Data
+from mod2 import Data
 
 
 class DrawWithSample:

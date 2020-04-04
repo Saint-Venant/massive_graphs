@@ -3,8 +3,8 @@ import matplotlib as mpl
 import numpy as np
 import time
 
-import Output
-import PlotTools
+from mod2 import Output
+from mod2 import PlotTools
 
 
 class PageRank:
@@ -122,7 +122,7 @@ if __name__ == '__main__':
     # --- sample of points
     #pr.plotPRvsDegree('IN', 'sample', maxPoints=N)
     # --- all points (cmap)
-    #pr.plotPRvsDegree('IN', 'cmap', maxPoints=N)
+    pr.plotPRvsDegree('IN', 'cmap', maxPoints=N)
 
     # PageRank vs. degree OUT
     # --- sample of points
