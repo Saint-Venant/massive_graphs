@@ -171,6 +171,14 @@ void Exercise3_3() {
 
 	Exercise3(graphPath);
 }
+void Exercise3_4() {
+	char* instancesDir = "../../instances_tme1/";
+	char* graph = "clean_orkut.txt";
+	char* graphPath = concat(instancesDir, graph);
+	printf("Graph path : %s\n", graphPath);
+
+	Exercise3(graphPath);
+}
 
 void Exercise4() {
 	char* instancesDir = "../../instances_tme2/scholar/";
@@ -224,6 +232,8 @@ int main(int argc, char** argv) {
 		Exercise3_2();
 	} else if (exercise == 33) {
 		Exercise3_3();
+	} else if (exercise == 34) {
+		Exercise3_4();
 	} else if (exercise == 4) {
 		Exercise4();
 	}
