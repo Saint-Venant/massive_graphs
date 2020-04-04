@@ -3,6 +3,7 @@ import matplotlib as mpl
 import numpy as np
 import time
 
+from mod4 import Authors
 
 class CoreValue:
     def __init__(self, outputDir):
@@ -114,6 +115,37 @@ class CoreValue:
 
         print('Reading time : ', t2 - t1)
         print('Plotting time : ', t3 - t2)
+
+    def getHighest(self):
+        '''
+        Get nodes ID with highest core value
+        '''
+        valMax = 0
+        nodes = []
+        xDegree, yCoreValue = self.readFile(self.filepath)
+        n = xDegree.shape[0]
+
+        for i in range(n):
+            val = yCoreValue[i]
+            if val > valMax:
+                valMax = val
+                nodes = [i]
+            elif val == valMax:
+                nodes.append(i)
+
+        return nodes, valMax
+
+    def displayHighest(self):
+        '''
+        Display authors with highest core value
+        '''
+        nodes, valMax = self.getHighest()
+        a = Authors.Authors()
+        print('Highest core value : ', valMax)
+        print('Number of authors with this core value : ', len(nodes))
+        print('List of those authors :')
+        for i in nodes:
+            print(' > ', a.names[i])
     
 
 
@@ -121,8 +153,13 @@ if __name__ == '__main__':
     outputDir = '../outputEx4/'
     cv = CoreValue(outputDir)
 
-    N = 10**4
-    #cv.plot_scatter(Nsample=N)
-    cv.plot_cmap(10**4)
+    if False:
+        N = 10**4
+        #cv.plot_scatter(Nsample=N)
+        #cv.plot_cmap(10**4)
     
-    plt.show()
+        #plt.show()
+
+    if False:
+        cv.displayHighest()
+        
