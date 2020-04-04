@@ -147,7 +147,7 @@ void Exercise3(char* graphPath) {
 
 void Exercise3_1() {
 	char* instancesDir = "../../instances_tme1/";
-	char* graph = "clean_email-Eu-core.txt";
+	char* graph = "clean_email.txt";
 	char* graphPath = concat(instancesDir, graph);
 	printf("Graph path : %s\n", graphPath);
 
@@ -156,7 +156,7 @@ void Exercise3_1() {
 
 void Exercise3_2() {
 	char* instancesDir = "../../instances_tme1/";
-	char* graph = "clean_com-amazon.ungraph.txt";
+	char* graph = "clean_amazon.txt";
 	char* graphPath = concat(instancesDir, graph);
 	printf("Graph path : %s\n", graphPath);
 
@@ -165,7 +165,7 @@ void Exercise3_2() {
 
 void Exercise3_3() {
 	char* instancesDir = "../../instances_tme1/";
-	char* graph = "clean_com-lj.ungraph.txt";
+	char* graph = "clean_LiveJournal.txt";
 	char* graphPath = concat(instancesDir, graph);
 	printf("Graph path : %s\n", graphPath);
 
