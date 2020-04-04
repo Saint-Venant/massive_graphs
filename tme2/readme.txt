@@ -33,5 +33,6 @@ In folder /src/, execute command
 where "main" will be the name of the executable.
 
 --- To execute ---
+
 In folder bin, execute command "./main grapheInstance.txt exerciseNumber" where :
-* "exerciseNumber" is the number of the desired exercise to execute
+	* "exerciseNumber" is the number of the desired exercise to execute (see the list of all possible entries in the main function in main.c)
